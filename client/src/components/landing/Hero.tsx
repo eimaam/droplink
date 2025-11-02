@@ -41,7 +41,7 @@ function Hero() {
             </motion.div>
           </div>
 
-          <div className="flex justify-center items-center gap-8 flex-wrap">
+          <div className="flex justify-center items-center gap-4 md:gap-8 flex-wrap">
             {[
               { icon: Upload, label: 'Drop', delay: 0.2 },
               { icon: Send, label: 'Link', delay: 0.4 },
@@ -55,10 +55,10 @@ function Hero() {
                 transition={{ delay: item.delay, duration: 0.5 }}
                 className="flex flex-col items-center gap-2"
               >
-                <div className="w-16 h-16 rounded-2xl bg-surface border border-primary/30 flex items-center justify-center hover:border-primary transition-all hover:shadow-lg hover:shadow-primary/30">
-                  <item.icon className="w-8 h-8 text-primary" />
+                <div className="w-12 h-12 md:w-16 md:h-16 rounded-xl md:rounded-2xl bg-surface border border-primary/30 flex items-center justify-center hover:border-primary transition-all hover:shadow-lg hover:shadow-primary/30">
+                  <item.icon className="w-6 h-6 md:w-8 md:h-8 text-primary" />
                 </div>
-                <span className="text-sm text-text-secondary">{item.label}</span>
+                <span className="text-xs md:text-sm text-text-secondary">{item.label}</span>
               </motion.div>
             ))}
           </div>

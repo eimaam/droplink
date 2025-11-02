@@ -34,24 +34,25 @@ function Navbar() {
             : 'bg-transparent'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-6 py-4">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 py-3 md:py-4">
           <div className="flex items-center justify-between">
             <Logo
-              size="md"
+              size="sm"
               variant="default"
               showText={true}
               showImage={true}
               animated={true}
               href="#"
+              className="md:!text-xl"
             />
 
-            <div className="hidden md:flex items-center gap-8">
+            <div className="hidden md:flex items-center gap-6 lg:gap-8">
               {navLinks.map((link, index) => (
                 <motion.a
                   key={index}
                   href={link.href}
                   whileHover={{ scale: 1.05 }}
-                  className="text-text-secondary hover:text-text-primary transition-colors font-medium relative group"
+                  className="text-sm lg:text-base text-text-secondary hover:text-text-primary transition-colors font-medium relative group"
                 >
                   {link.label}
                   <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-primary-light group-hover:w-full transition-all duration-300" />
@@ -62,7 +63,7 @@ function Navbar() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <Button variant="primary" size="md">
+                <Button variant="primary" size="sm" className="lg:!h-10 lg:!px-4">
                   Try Now
                 </Button>
               </motion.div>

@@ -11,21 +11,21 @@ function TelegramIntegration() {
   ];
 
   return (
-    <section className="py-24 px-6 bg-background-dark">
+    <section className="py-12 md:py-24 px-4 md:px-6 bg-background-dark">
       <div className="max-w-7xl mx-auto">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-5xl font-bold mb-6">Telegram Bot Integration</h2>
-            <p className="text-xl text-text-secondary mb-8 leading-relaxed">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-6">Telegram Bot Integration</h2>
+            <p className="text-base md:text-lg lg:text-xl text-text-secondary mb-6 md:mb-8 leading-relaxed">
               Share files directly from Telegram with our powerful bot. No need to switch between apps.
             </p>
 
-            <div className="space-y-4 mb-8">
+            <div className="space-y-3 md:space-y-4 mb-6 md:mb-8">
               {steps.map((step, index) => (
                 <motion.div
                   key={index}
@@ -33,12 +33,12 @@ function TelegramIntegration() {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1, duration: 0.4 }}
-                  className="flex items-center gap-4"
+                  className="flex items-center gap-3 md:gap-4"
                 >
-                  <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-primary to-primary-light flex items-center justify-center flex-shrink-0">
-                    <step.icon className="w-6 h-6 text-primary-foreground" />
+                  <div className="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-gradient-to-br from-primary to-primary-light flex items-center justify-center flex-shrink-0">
+                    <step.icon className="w-5 h-5 md:w-6 md:h-6 text-primary-foreground" />
                   </div>
-                  <span className="text-lg text-text-primary">{step.text}</span>
+                  <span className="text-base md:text-lg text-text-primary">{step.text}</span>
                 </motion.div>
               ))}
             </div>
@@ -78,7 +78,7 @@ function TelegramIntegration() {
                 </div>
               </div>
 
-              <div className="bg-background-dark p-4 h-[480px] overflow-y-auto">
+              <div className="bg-background-dark p-3 md:p-4 h-[400px] md:h-[480px] overflow-y-auto">
                 <div className="space-y-3">
                   <div className="flex justify-center mb-6">
                     <Badge variant="secondary" size="sm">

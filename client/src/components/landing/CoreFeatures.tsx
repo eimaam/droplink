@@ -32,20 +32,20 @@ function CoreFeatures() {
   ];
 
   return (
-    <section className="py-24 px-6">
+    <section className="py-12 md:py-24 px-4 md:px-6">
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-8 md:mb-16"
         >
-          <h2 className="text-5xl font-bold mb-4">Core Features</h2>
-          <p className="text-xl text-text-secondary">Everything you need for secure, temporary sharing</p>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-3 md:mb-4">Core Features</h2>
+          <p className="text-base md:text-lg lg:text-xl text-text-secondary">Everything you need for secure, temporary sharing</p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
           {features.map((feature, index) => (
             <motion.div
               key={index}
@@ -57,14 +57,14 @@ function CoreFeatures() {
               className="group"
             >
               <Card variant="default" padding="md" hover>
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-lg bg-primary/20 flex items-center justify-center flex-shrink-0 group-hover:bg-primary/30 transition-all">
-                    <feature.icon className="w-6 h-6 text-primary" />
+                <div className="flex items-start gap-3 md:gap-4">
+                  <div className="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-primary/20 flex items-center justify-center flex-shrink-0 group-hover:bg-primary/30 transition-all">
+                    <feature.icon className="w-5 h-5 md:w-6 md:h-6 text-primary" />
                   </div>
 
                   <div>
-                    <h3 className="text-xl text-text-primary font-bold mb-2">{feature.title}</h3>
-                    <p className="text-text-secondary">{feature.description}</p>
+                    <h3 className="text-base md:text-lg lg:text-xl text-text-primary font-bold mb-1 md:mb-2">{feature.title}</h3>
+                    <p className="text-sm md:text-base text-text-secondary">{feature.description}</p>
                   </div>
                 </div>
               </Card>

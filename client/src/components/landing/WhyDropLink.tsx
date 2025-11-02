@@ -25,20 +25,20 @@ function WhyDropLink() {
   ];
 
   return (
-    <section className="py-24 px-6 bg-background-dark">
+    <section className="py-12 md:py-24 px-4 md:px-6 bg-background-dark">
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-8 md:mb-16"
         >
-          <h2 className="text-5xl font-bold mb-4">Why DropLink?</h2>
-          <p className="text-xl text-text-secondary">Built for privacy, designed for simplicity</p>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-3 md:mb-4">Why DropLink?</h2>
+          <p className="text-base md:text-lg lg:text-xl text-text-secondary">Built for privacy, designed for simplicity</p>
         </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-3 gap-6 md:gap-8">
           {features.map((feature, index) => (
             <motion.div
               key={index}
@@ -50,12 +50,12 @@ function WhyDropLink() {
               className="group h-full"
             >
               <Card variant="ghost" padding="lg" hover className="h-full bg-surface/50 backdrop-blur-sm">
-                <div className={`w-20 h-20 rounded-2xl bg-gradient-to-br ${feature.gradient} flex items-center justify-center mb-6 group-hover:shadow-lg group-hover:shadow-glow-primary transition-all`}>
-                  <feature.icon className="w-10 h-10 text-primary-foreground" />
+                <div className={`w-16 h-16 md:w-20 md:h-20 rounded-xl md:rounded-2xl bg-gradient-to-br ${feature.gradient} flex items-center justify-center mb-4 md:mb-6 group-hover:shadow-glow-primary transition-all`}>
+                  <feature.icon className="w-8 h-8 md:w-10 md:h-10 text-primary-foreground" />
                 </div>
 
-                <h3 className="text-2xl text-text-primary font-bold mb-4">{feature.title}</h3>
-                <p className="text-text-secondary leading-relaxed text-lg">{feature.description}</p>
+                <h3 className="text-lg md:text-xl lg:text-2xl text-text-primary font-bold mb-3 md:mb-4">{feature.title}</h3>
+                <p className="text-text-secondary leading-relaxed text-sm md:text-base lg:text-lg">{feature.description}</p>
               </Card>
             </motion.div>
           ))}
