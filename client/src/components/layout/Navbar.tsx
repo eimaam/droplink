@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import { Button, Logo } from '../ui';
@@ -36,15 +37,16 @@ function Navbar() {
       >
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-3 md:py-4">
           <div className="flex items-center justify-between">
-            <Logo
-              size="sm"
-              variant="default"
-              showText={true}
-              showImage={true}
-              animated={true}
-              href="#"
-              className="md:!text-xl"
-            />
+            <Link to="/">
+              <Logo
+                size="sm"
+                variant="default"
+                showText={true}
+                showImage={true}
+                animated={true}
+                className="md:!text-xl"
+              />
+            </Link>
 
             <div className="hidden md:flex items-center gap-6 lg:gap-8">
               {navLinks.map((link, index) => (

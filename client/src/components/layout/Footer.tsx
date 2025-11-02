@@ -1,10 +1,11 @@
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { Send, Github } from 'lucide-react';
 import { Logo } from '../ui';
 
 function Footer() {
   const links = [
-    { label: 'About', href: '#' },
+    { label: 'About', href: '/about' },
     { label: 'Docs', href: '#' },
     { label: 'Privacy', href: '#' },
     { label: 'Terms', href: '#' }
@@ -24,13 +25,14 @@ function Footer() {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
           >
-            <Logo
-              size="md"
-              variant="default"
-              showText={true}
-              showImage={true}
-              href="#"
-            />
+            <Link to="/">
+              <Logo
+                size="md"
+                variant="default"
+                showText={true}
+                showImage={true}
+              />
+            </Link>
           </motion.div>
 
           <motion.div
@@ -40,13 +42,23 @@ function Footer() {
             className="flex flex-wrap justify-center gap-8"
           >
             {links.map((link, index) => (
-              <a
-                key={index}
-                href={link.href}
-                className="text-text-secondary hover:text-text-primary transition-colors"
-              >
-                {link.label}
-              </a>
+              link.href.startsWith('#') ? (
+                <a
+                  key={index}
+                  href={link.href}
+                  className="text-text-secondary hover:text-text-primary transition-colors"
+                >
+                  {link.label}
+                </a>
+              ) : (
+                <Link
+                  key={index}
+                  to={link.href}
+                  className="text-text-secondary hover:text-text-primary transition-colors"
+                >
+                  {link.label}
+                </Link>
+              )
             ))}
           </motion.div>
 
