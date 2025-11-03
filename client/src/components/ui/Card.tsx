@@ -4,8 +4,12 @@ import type { CardProps as AntdCardProps } from 'antd';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../../utils/cn';
 
+type CardVariant = 'default' | 'outlined' | 'elevated';
+type CardRounded = 'none' | 'sm' | 'md' | 'lg' | 'xl';
+type CardPadding = 'none' | 'sm' | 'md' | 'lg' | 'xl';
+
 const cardVariants = cva(
-  'rounded-xl transition-all',
+  'transition-all',
   {
     variants: {
       variant: {
@@ -15,12 +19,19 @@ const cardVariants = cva(
         outline: 'bg-transparent border-2 border-border',
         gradient: 'bg-gradient-to-br from-card to-surface border border-primary/20',
       },
+      rounded: {
+        none: 'rounded-none',
+        sm: 'rounded-sm',
+        md: 'rounded-md',
+        lg: 'rounded-lg',
+        xl: 'rounded-xl',
+      },
       padding: {
-        none: 'p-0',
-        sm: 'p-4',
-        md: 'p-6',
-        lg: 'p-8',
-        xl: 'p-12',
+        none: '!p-0',
+        sm: '!p-4',
+        md: '!p-6',
+        lg: '!p-8',
+        xl: '!p-12',
       },
       hover: {
         true: 'hover:border-primary hover:shadow-xl hover:shadow-primary/20 cursor-pointer',
@@ -29,7 +40,8 @@ const cardVariants = cva(
     },
     defaultVariants: {
       variant: 'default',
-      padding: 'md',
+      padding: 'none',
+      rounded: 'lg',
       hover: false,
     },
   }
