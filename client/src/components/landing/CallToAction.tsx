@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { Button, Badge } from '../ui';
 import { ArrowRight } from 'lucide-react';
 
@@ -26,10 +27,12 @@ function CallToAction() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <Button variant="primary" size="lg" className="md:!h-14 md:!px-8 md:!text-lg">
-                <ArrowRight className="w-4 h-4 md:w-5 md:h-5 mr-2" />
-                Open Web App
-              </Button>
+              <Link to="/auth">
+                <Button variant="primary" size="lg" className="md:!h-14 md:!px-8 md:!text-lg">
+                  <ArrowRight className="w-4 h-4 md:w-5 md:h-5 mr-2" />
+                  Open Web App
+                </Button>
+              </Link>
             </motion.div>
 
             <motion.div

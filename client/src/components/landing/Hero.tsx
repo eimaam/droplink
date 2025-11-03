@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { Button } from '../ui';
 import { Upload, Send, Clock, Zap } from 'lucide-react';
 
@@ -26,9 +27,11 @@ function Hero() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <Button variant="primary" size="xl">
-                Try on Web →
-              </Button>
+              <Link to="/auth">
+                <Button variant="primary" size="xl">
+                  Try on Web →
+                </Button>
+              </Link>
             </motion.div>
 
             <motion.div

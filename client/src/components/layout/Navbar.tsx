@@ -65,9 +65,11 @@ function Navbar() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <Button variant="primary" size="sm" className="lg:!h-10 lg:!px-4">
-                  Try Now
-                </Button>
+                <Link to="/auth">
+                  <Button variant="primary" size="sm" className="lg:!h-10 lg:!px-4">
+                    Try Now
+                  </Button>
+                </Link>
               </motion.div>
             </div>
 
@@ -106,9 +108,11 @@ function Navbar() {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <Button variant="primary" size="md" fullWidth>
-                  Try Now
-                </Button>
+                <Link to="/auth">
+                  <Button variant="primary" size="md" fullWidth>
+                    Try Now
+                  </Button>
+                </Link>
               </motion.div>
             </motion.div>
           )}

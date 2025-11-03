@@ -309,10 +309,12 @@ const About = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <Button variant="primary" size="md">
-                  <ArrowRight className="w-4 h-4 mr-2" />
-                  Use DropLink on Web
-                </Button>
+                <Link to="/auth">
+                  <Button variant="primary" size="md">
+                    <ArrowRight className="w-4 h-4 mr-2" />
+                    Use DropLink on Web
+                  </Button>
+                </Link>
               </motion.div>
 
               <motion.div
