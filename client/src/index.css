@@ -57,3 +57,72 @@
 ::-webkit-scrollbar-thumb:hover {
   @apply bg-primary-light;
 }
+
+/* Modern Modal Styles */
+.ant-modal-mask {
+  @apply bg-black/60 backdrop-blur-md;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.ant-modal-wrap {
+  @apply flex items-center justify-center;
+}
+
+.ant-modal {
+  @apply !p-0 !max-w-none !w-auto;
+}
+
+.ant-modal-content {
+  @apply !bg-surface !border !border-border !rounded-2xl !p-0 overflow-hidden;
+  box-shadow: 0 0 60px rgba(236, 72, 153, 0.3), 
+              0 0 100px rgba(236, 72, 153, 0.2),
+              0 20px 60px -15px rgba(0, 0, 0, 0.5),
+              0 0 0 1px rgba(236, 72, 153, 0.2) !important;
+  animation: modalFadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ant-modal-header {
+  @apply !bg-surface !border-b !border-border !p-6 !pb-4;
+}
+
+.ant-modal-title {
+  @apply !text-foreground !text-xl !font-bold !m-0;
+}
+
+.ant-modal-close {
+  @apply !top-6 !right-6 !w-8 !h-8 !rounded-lg !bg-muted/30 hover:!bg-muted/50 !transition-colors;
+}
+
+.ant-modal-close-x {
+  @apply !text-foreground/70 hover:!text-foreground !flex !items-center !justify-center !w-full !h-full;
+}
+
+.ant-modal-body {
+  @apply !p-6 !text-foreground;
+}
+
+.ant-modal-footer {
+  @apply !bg-surface !border-t !border-border !p-6 !pt-4;
+}
+
+/* Modal Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
