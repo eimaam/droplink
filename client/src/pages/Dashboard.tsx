@@ -180,10 +180,10 @@ const Dashboard = () => {
   });
 
   return (
-    <div className="min-h-screen bg-background-base flex">
+    <div className="min-h-screen bg-background-base">
       <DashboardSidebar activeTab={activeTab} onTabChange={setActiveTab} />
 
-      <main className="flex-1 overflow-auto pb-20 md:pb-0">
+      <main className="flex-1 overflow-auto pb-20 md:pb-0 md:ml-64">
         <div className="max-w-7xl mx-auto p-4 md:p-6 lg:p-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -210,7 +210,7 @@ const Dashboard = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.1, duration: 0.5 }}
                   >
-                    <Card variant="default" hover className="h-full">
+                    <Card variant="default" hover className="h-full hover:shadow-glow-soft transition-shadow">
                       <div className="flex items-center gap-3">
                         <stat.icon className={`w-5 h-5 ${stat.color} flex-shrink-0`} />
                         <div className="flex-1 min-w-0">
@@ -247,8 +247,8 @@ const Dashboard = () => {
                   onClick={() => fileInputRef.current?.click()}
                   className={`relative overflow-hidden rounded-2xl border-2 border-dashed transition-all cursor-pointer ${
                     isDragging
-                      ? 'border-primary bg-primary/5 scale-[1.02]'
-                      : 'border-border hover:border-primary/50 hover:bg-muted/20'
+                      ? 'border-primary bg-primary/5 scale-[1.02] shadow-glow-primary'
+                      : 'border-border hover:border-primary/50 hover:bg-muted/20 hover:shadow-glow-soft'
                   }`}
                 >
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent-cyan/5" />
@@ -294,7 +294,7 @@ const Dashboard = () => {
                           exit={{ opacity: 0, y: -10 }}
                           className="flex flex-col items-center"
                         >
-                          <div className="w-20 h-20 mb-4 rounded-full bg-gradient-to-br from-primary to-accent-cyan flex items-center justify-center">
+                          <div className="w-20 h-20 mb-4 rounded-full bg-gradient-to-br from-primary to-accent-cyan flex items-center justify-center shadow-glow-primary">
                             <Upload className="w-10 h-10 text-white" />
                           </div>
                           <h3 className="text-xl md:text-2xl font-bold text-foreground mb-2">
@@ -336,10 +336,10 @@ const Dashboard = () => {
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                     {pinnedDrops.map((drop) => (
-                      <Card key={drop.id} variant="default" hover className="group">
+                      <Card key={drop.id} variant="default" hover className="group hover:shadow-glow-soft transition-shadow">
                         <div className="flex items-center justify-between gap-3">
                           <div className="flex items-center gap-3 flex-1 min-w-0">
-                            <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                            <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0 group-hover:shadow-glow-primary transition-shadow">
                               <Pin className="w-5 h-5 text-primary" />
                             </div>
                             <div className="flex-1 min-w-0">
@@ -429,11 +429,11 @@ const Dashboard = () => {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: index * 0.05, duration: 0.3 }}
                       >
-                        <Card variant="default" padding="none" hover className="group h-full">
+                        <Card variant="default" padding="none" hover className="group h-full hover:shadow-glow-soft transition-all">
                           <div className="p-4">
                             <div className="flex items-start justify-between mb-3">
                               <div className="flex items-center gap-3 flex-1 min-w-0">
-                                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-accent-cyan flex items-center justify-center flex-shrink-0">
+                                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-accent-cyan flex items-center justify-center flex-shrink-0 shadow-glow-primary group-hover:shadow-glow-pink transition-shadow">
                                   {drop.name.endsWith('.pdf') ? (
                                     <FileText className="w-6 h-6 text-white" />
                                   ) : drop.name.match(/\.(jpg|jpeg|png|gif)$/i) ? (
@@ -667,53 +667,86 @@ const Dashboard = () => {
       <Modal
         open={isNewDropModalOpen}
         onCancel={() => setIsNewDropModalOpen(false)}
-        title="Create New Drop"
+        title={
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-accent-cyan flex items-center justify-center shadow-glow-primary">
+              <Upload className="w-5 h-5 text-white" />
+            </div>
+            <div>
+              <h3 className="text-lg font-bold text-foreground">Create New Drop</h3>
+              <p className="text-xs text-foreground/60 font-normal">Share files or text that expires automatically</p>
+            </div>
+          </div>
+        }
         footer={null}
         width={600}
       >
-        <div className="py-4">
-          <div className="border-2 border-dashed border-border rounded-lg p-12 text-center mb-6 hover:border-primary transition-colors cursor-pointer">
-            <Upload className="w-12 h-12 text-foreground/40 mx-auto mb-4" />
-            <p className="text-sm font-medium text-foreground mb-1">
+        <div className="space-y-6">
+          <div className="border-2 border-dashed border-border rounded-xl p-10 text-center bg-muted/20 hover:border-primary hover:bg-muted/30 transition-all cursor-pointer group">
+            <div className="w-16 h-16 rounded-full bg-gradient-to-br from-primary/20 to-accent-cyan/20 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+              <Upload className="w-8 h-8 text-primary" />
+            </div>
+            <p className="text-base font-semibold text-foreground mb-2">
               Drop files here or click to browse
             </p>
-            <p className="text-xs text-foreground/60">
-              Max file size: 50MB
+            <p className="text-sm text-foreground/60">
+              Max file size: <span className="font-medium text-primary">50MB</span>
             </p>
           </div>
           
-          <div className="space-y-4">
+          <div className="space-y-5">
             <div>
-              <label className="block text-sm font-medium text-foreground/80 mb-2">
+              <label className="block text-sm font-semibold text-foreground mb-3">
                 Visibility
               </label>
-              <div className="flex gap-3">
-                <Button variant="outline" size="sm" fullWidth>
-                  <Globe className="w-4 h-4 mr-2" />
-                  Public
-                </Button>
-                <Button variant="outline" size="sm" fullWidth>
-                  <Lock className="w-4 h-4 mr-2" />
-                  Private
-                </Button>
+              <div className="grid grid-cols-2 gap-3">
+                <button className="flex items-center gap-3 p-4 rounded-xl border-2 border-border bg-background-base hover:border-primary hover:bg-primary/5 transition-all group">
+                  <div className="w-10 h-10 rounded-lg bg-success/10 flex items-center justify-center group-hover:bg-success/20 transition-colors">
+                    <Globe className="w-5 h-5 text-success" />
+                  </div>
+                  <div className="text-left">
+                    <p className="text-sm font-semibold text-foreground">Public</p>
+                    <p className="text-xs text-foreground/60">Anyone with link</p>
+                  </div>
+                </button>
+                <button className="flex items-center gap-3 p-4 rounded-xl border-2 border-border bg-background-base hover:border-primary hover:bg-primary/5 transition-all group">
+                  <div className="w-10 h-10 rounded-lg bg-foreground/5 flex items-center justify-center group-hover:bg-foreground/10 transition-colors">
+                    <Lock className="w-5 h-5 text-foreground/70" />
+                  </div>
+                  <div className="text-left">
+                    <p className="text-sm font-semibold text-foreground">Private</p>
+                    <p className="text-xs text-foreground/60">Restricted access</p>
+                  </div>
+                </button>
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-foreground/80 mb-2">
+              <label className="block text-sm font-semibold text-foreground mb-3">
                 Expires In
               </label>
               <div className="grid grid-cols-3 gap-3">
-                <Button variant="outline" size="sm">1 Hour</Button>
-                <Button variant="outline" size="sm">24 Hours</Button>
-                <Button variant="outline" size="sm">7 Days</Button>
+                <button className="p-3 rounded-lg border-2 border-border bg-background-base hover:border-primary hover:bg-primary/5 transition-all">
+                  <p className="text-sm font-semibold text-foreground">1 Hour</p>
+                  <p className="text-xs text-foreground/60">Quick share</p>
+                </button>
+                <button className="p-3 rounded-lg border-2 border-primary bg-primary/5 transition-all">
+                  <p className="text-sm font-semibold text-primary">24 Hours</p>
+                  <p className="text-xs text-primary/80">Recommended</p>
+                </button>
+                <button className="p-3 rounded-lg border-2 border-border bg-background-base hover:border-primary hover:bg-primary/5 transition-all">
+                  <p className="text-sm font-semibold text-foreground">7 Days</p>
+                  <p className="text-xs text-foreground/60">Extended</p>
+                </button>
               </div>
             </div>
 
-            <Button variant="primary" size="md" fullWidth>
-              <Upload className="w-4 h-4 mr-2" />
-              Create Drop
-            </Button>
+            <div className="pt-2">
+              <Button variant="primary" size="lg" fullWidth>
+                <Upload className="w-5 h-5 mr-2" />
+                Create Drop
+              </Button>
+            </div>
           </div>
         </div>
       </Modal>
@@ -721,18 +754,31 @@ const Dashboard = () => {
       <Modal
         open={!!deleteDropId}
         onCancel={() => setDeleteDropId(null)}
-        title="Delete Drop?"
+        title={
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-destructive/10 flex items-center justify-center">
+              <Trash2 className="w-5 h-5 text-destructive" />
+            </div>
+            <div>
+              <h3 className="text-lg font-bold text-foreground">Delete Drop?</h3>
+              <p className="text-xs text-foreground/60 font-normal">This action cannot be undone</p>
+            </div>
+          </div>
+        }
         footer={null}
-        width={400}
+        width={480}
       >
-        <div className="py-4">
-          <p className="text-sm text-foreground/70 mb-6">
-            Are you sure you want to delete this drop? This action cannot be undone and the link will stop working immediately.
-          </p>
+        <div className="space-y-6">
+          <div className="p-4 rounded-xl bg-destructive/5 border border-destructive/20">
+            <p className="text-sm text-foreground leading-relaxed">
+              Are you sure you want to delete this drop? The shared link will <strong className="font-semibold text-foreground">stop working immediately</strong> and all associated data will be permanently removed.
+            </p>
+          </div>
+          
           <div className="flex gap-3">
             <Button 
-              variant="ghost" 
-              size="md" 
+              variant="outline" 
+              size="lg" 
               fullWidth
               onClick={() => setDeleteDropId(null)}
             >
@@ -740,12 +786,12 @@ const Dashboard = () => {
             </Button>
             <Button 
               variant="destructive" 
-              size="md" 
+              size="lg" 
               fullWidth
               onClick={handleDeleteDrop}
             >
               <Trash2 className="w-4 h-4 mr-2" />
-              Delete
+              Delete Drop
             </Button>
           </div>
         </div>
