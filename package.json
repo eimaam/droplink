@@ -24,7 +24,8 @@
   "author": "Imam Dahir D",
   "license": "ISC",
   "dependencies": {
-    "date-fns": "^4.1.0"
+    "date-fns": "^4.1.0",
+    "dotenv": "^17.2.3"
   },
   "devDependencies": {
     "typescript": "^5.6.3"
