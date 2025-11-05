@@ -15,3 +15,6 @@ export {
   type UpdateDropDTO,
   type DropStats
 } from './drop.types';
+
+// Environment Types
+export { NodeEnv } from './environment.types';

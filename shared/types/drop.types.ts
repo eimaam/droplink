@@ -1,3 +1,5 @@
+import { IUser } from "src/types/user";
+
 export enum DropVisibility {
   PUBLIC = 'public',
   PRIVATE = 'private',
@@ -32,7 +34,7 @@ export interface Drop {
   isPasswordProtected: boolean;
   content?: string; // For text drops
   previewUrl?: string;
-  userId: string;
+  user: Pick<IUser, '_id' | 'username' | 'avatar'> | null;
 }
 
 export interface CreateDropDTO {
