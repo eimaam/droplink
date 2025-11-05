@@ -699,7 +699,7 @@ const MyDrops = () => {
                 </Card>
               )
             ) : (
-              <Card variant="default" padding="lg">
+              <Card variant="default" padding="sm">
                 <div className="text-center py-12">
                   <div className="w-20 h-20 rounded-full bg-muted flex items-center justify-center mx-auto mb-4">
                     {searchQuery || filterBy !== 'all' ? (
