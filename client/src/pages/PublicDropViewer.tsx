@@ -23,28 +23,16 @@ import {
   Unlock,
   QrCode
 } from 'lucide-react';
+import { getDummyDrop } from '../data/dummyData';
+import type { Drop as DropType } from '@shared/types/drop.types';
+import EnhancedFilePreview from '../components/EnhancedFilePreview';
 
-
-interface Drop {
-  id: string;
-  name: string;
-  type: 'file' | 'text';
-  size: string;
-  fileType: string;
-  expiryTimestamp: number;
-  visibility: 'public' | 'private';
-  downloads: number;
-  views: number;
-  isPasswordProtected: boolean;
-  content?: string;
-  previewUrl?: string;
-}
 
 const PublicDropViewer = () => {
   const { dropId } = useParams<{ dropId: string }>();
   const navigate = useNavigate();
   
-  const [drop, setDrop] = useState<Drop | null>(null);
+  const [drop, setDrop] = useState<DropType | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error] = useState<string | null>(null);
   const [isLocked, setIsLocked] = useState<boolean>(false);
@@ -55,78 +43,23 @@ const PublicDropViewer = () => {
   const [downloadStarted, setDownloadStarted] = useState<boolean>(false);
   const [showQRModal, setShowQRModal] = useState<boolean>(false);
 
-  // Mock data 
+  // Fetch drop data from dummy data
   useEffect(() => {
-    // Simulate different drop states based on dropId
-    let mockDrop: Drop;
-
-    if (dropId === 'password' || dropId === 'protected' || dropId === 'locked') {
-      // Password-protected drop
-      mockDrop = {
-        id: dropId,
-        name: 'confidential-report.pdf',
-        type: 'file',
-        size: '1.8 MB',
-        fileType: 'application/pdf',
-        expiryTimestamp: Date.now() + (5 * 24 * 60 * 60 * 1000), // 5 days
-        visibility: 'private',
-        downloads: 5,
-        views: 15,
-        isPasswordProtected: true,
-        previewUrl: 'https://via.placeholder.com/800x600/1a1a2e/ec4899?text=Locked+Content'
-      };
-    } else if (dropId === 'expired' || dropId === 'old') {
-      // Expired drop
-      mockDrop = {
-        id: dropId,
-        name: 'expired-file.pdf',
-        type: 'file',
-        size: '3.2 MB',
-        fileType: 'application/pdf',
-        expiryTimestamp: Date.now() - (1 * 60 * 60 * 1000), // 1 hour ago (expired)
-        visibility: 'public',
-        downloads: 25,
-        views: 89,
-        isPasswordProtected: false,
-        previewUrl: 'https://via.placeholder.com/800x600/1a1a2e/ec4899?text=Expired'
-      };
-    } else if (dropId === 'expiring' || dropId === 'urgent') {
-      // Expiring soon (< 1 hour)
-      mockDrop = {
-        id: dropId || '1',
-        name: 'urgent-document.pdf',
-        type: 'file',
-        size: '2.1 MB',
-        fileType: 'application/pdf',
-        expiryTimestamp: Date.now() + (30 * 60 * 1000), // 30 minutes
-        visibility: 'public',
-        downloads: 8,
-        views: 23,
-        isPasswordProtected: false,
-        previewUrl: 'https://via.placeholder.com/800x600/1a1a2e/ec4899?text=Expiring+Soon'
-      };
-    } else {
-      // Normal drop (default)
-      mockDrop = {
-        id: dropId || '1',
-        name: 'presentation-deck.pdf',
-        type: 'file',
-        size: '2.4 MB',
-        fileType: 'application/pdf',
-        expiryTimestamp: Date.now() + (2 * 24 * 60 * 60 * 1000), // 2 days
-        visibility: 'public',
-        downloads: 12,
-        views: 45,
-        isPasswordProtected: false,
-        previewUrl: 'https://via.placeholder.com/800x600/1a1a2e/ec4899?text=PDF+Preview'
-      };
+    if (!dropId) {
+      setLoading(false);
+      return;
     }
 
     setTimeout(() => {
-      setDrop(mockDrop);
-      setIsLocked(mockDrop.isPasswordProtected);
+      const foundDrop = getDummyDrop(dropId);
+      
+      if (foundDrop) {
+        setDrop(foundDrop);
+        setIsLocked(foundDrop.isPasswordProtected);
+      }
+      
       setLoading(false);
-    }, 800);
+    }, 500);
   }, [dropId]);
 
   // Live countdown timer
@@ -198,7 +131,8 @@ const PublicDropViewer = () => {
     message.info('Share menu coming soon! 🚀');
   };
 
-  const getFileIcon = (fileType: string) => {
+  const getFileIcon = (fileType?: string) => {
+    if (!fileType) return File;
     if (fileType.startsWith('image/')) return ImageIcon;
     if (fileType.startsWith('video/')) return Video;
     if (fileType.startsWith('audio/')) return Music;
@@ -416,6 +350,30 @@ const PublicDropViewer = () => {
                   {drop.name}
                 </motion.h1>
                 
+                {/* Uploader Info */}
+                {drop.user?.username && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 5 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.25 }}
+                    className="flex items-center justify-center gap-2 mb-4"
+                  >
+                    {drop.user.avatar && (
+                      <img 
+                        src={drop.user.avatar} 
+                        alt={drop.user.username}
+                        className="w-6 h-6 rounded-full border-2 border-primary/20"
+                      />
+                    )}
+                    <span className="text-sm text-foreground/70">
+                      Shared by{' '}
+                      <span className="font-semibold text-primary">
+                        @{drop.user.username}
+                      </span>
+                    </span>
+                  </motion.div>
+                )}
+
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
@@ -445,6 +403,24 @@ const PublicDropViewer = () => {
                   </span>
                 </motion.div>
               </div>
+            </div>
+          </Card>
+
+          {/* File Preview Section */}
+          <Card variant="elevated" className="mb-8 overflow-hidden">
+            <div className="p-6">
+              <h2 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
+                <Eye className="w-5 h-5" />
+                File Preview
+              </h2>
+              <EnhancedFilePreview 
+                fileName={drop.name}
+                fileType={drop.fileType || ''}
+                fileSize={drop.size}
+                previewUrl={drop.previewUrl}
+                content={drop.content}
+                onDownload={handleDownload}
+              />
             </div>
           </Card>
 

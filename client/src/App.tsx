@@ -8,14 +8,25 @@ import DropDetails from './pages/DropDetails';
 import PublicDropViewer from './pages/PublicDropViewer';
 import Settings from './pages/Settings';
 import Help from './pages/Help';
+import FilePreviewTest from './pages/FilePreviewTest';
 import NotFound from './pages/NotFound';
 import ScrollToTop from './components/ScrollToTop';
+import { ConfigProvider, message } from 'antd';
 
 const App = () => {
+
+
+  // global message config
+  message.config({
+    maxCount: 3,
+    duration: 3,
+    rtl: false,
+  });
 
   return (
     <>
       <ScrollToTop />
+      <ConfigProvider>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
@@ -28,6 +39,7 @@ const App = () => {
         <Route path="/help" element={<Help />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
+      </ConfigProvider>
     </>
   )
 
