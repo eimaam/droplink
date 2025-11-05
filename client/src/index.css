@@ -7,7 +7,7 @@
 
 @layer base {
   * {
-    @apply box-border;
+    @apply box-border font-mono font-medium;
   }
 
   body {
@@ -41,6 +41,8 @@
     @apply shadow-glow-primary;
   }
 }
+
+
 
 ::-webkit-scrollbar {
   width: 10px;

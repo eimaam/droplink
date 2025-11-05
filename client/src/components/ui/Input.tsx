@@ -9,9 +9,9 @@ const inputVariants = cva(
   {
     variants: {
       variant: {
-        default: 'bg-background border-border text-text-primary hover:border-primary focus:border-primary',
-        filled: 'bg-surface border-transparent text-text-primary hover:bg-surface-hover focus:bg-background',
-        ghost: 'bg-transparent border-transparent text-text-primary hover:bg-surface/50',
+        default: '!bg-background !border-border text-text-primary hover:border-primary focus:border-primary',
+        filled: '!bg-surface !border-transparent text-text-primary hover:bg-surface-hover focus:bg-background',
+        ghost: '!!bg-transparent !border-transparent text-text-primary hover:bg-surface/50',
       },
       inputSize: {
         sm: 'h-8 text-sm px-3',
