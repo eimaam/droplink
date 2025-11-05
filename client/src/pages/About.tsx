@@ -4,6 +4,7 @@ import { Zap, Shield, Clock, Target, Heart, Rocket, ArrowRight, Send, Globe, Mai
 import { Twitter } from 'lucide-react';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
+import { Link } from 'react-router-dom';
 
 const About = () => {
   const coreValues = [
