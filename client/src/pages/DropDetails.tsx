@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Button, Card, Modal, Badge } from '../components/ui';
 import { DashboardSidebar } from '../components/layout';
-import { message } from 'antd';
+import { message, Modal as AntModal, QRCode } from 'antd';
 import {
   FileText,
   Link as LinkIcon,
@@ -45,10 +45,11 @@ const DropDetails = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('drops');
-  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
-  const [timeRemaining, setTimeRemaining] = useState('');
+  const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false);
+  const [showQRModal, setShowQRModal] = useState<boolean>(false);
+  const [timeRemaining, setTimeRemaining] = useState<string>('');
 
-  // Mock drop data - replace with API call
+  // Mock drop data
   const drop: Drop = {
     id: id || '1',
     name: 'presentation-deck.pdf',
@@ -367,7 +368,7 @@ const DropDetails = () => {
                         variant="outline"
                         size="lg"
                         fullWidth
-                        onClick={() => message.info('QR Code feature coming soon! 📱')}
+                        onClick={() => setShowQRModal(true)}
                       >
                         <QrCode className="w-4 h-4 mr-2" />
                         Show QR Code
@@ -478,6 +479,78 @@ const DropDetails = () => {
           </div>
         </div>
       </Modal>
+
+      {/* QR Code Modal */}
+      <AntModal
+        open={showQRModal}
+        onCancel={() => setShowQRModal(false)}
+        footer={null}
+        centered
+        width={400}
+      >
+        <div className="text-center py-6">
+          <div className="mb-6">
+            <h3 className="text-xl font-bold text-foreground mb-2">
+              Share Drop via QR Code
+            </h3>
+            <p className="text-sm text-foreground/60">
+              Scan to access this drop on any device
+            </p>
+          </div>
+
+          {/* QR Code */}
+          <div className="flex justify-center mb-6">
+            <QRCode
+              value={`${window.location.origin}/d/${drop.id}`}
+              size={256}
+              bgColor="#ffffff"
+              fgColor="#1a1a2e"
+              level="H"
+              bordered={false}
+              icon="/favicon.png"
+              iconSize={48}
+            />
+          </div>
+
+          {/* Drop Info */}
+          <div className="space-y-2 mb-6">
+            <p className="text-sm font-medium text-foreground">{drop.name}</p>
+            <p className="text-xs text-foreground/60">
+              Expires in {timeRemaining}
+            </p>
+          </div>
+
+          {/* Action Buttons */}
+          <div className="flex gap-3">
+            <Button
+              variant="outline"
+              fullWidth
+              onClick={() => {
+                // Download QR Code as image
+                const canvas = document.querySelector('canvas');
+                if (canvas) {
+                  const url = canvas.toDataURL();
+                  const a = document.createElement('a');
+                  a.href = url;
+                  a.download = `droplink-qr-${drop.id}.png`;
+                  a.click();
+                  message.success('QR Code downloaded!');
+                }
+              }}
+            >
+              <Download className="w-4 h-4 mr-2" />
+              Download QR
+            </Button>
+            <Button
+              variant="primary"
+              fullWidth
+              onClick={() => setShowQRModal(false)}
+            >
+              Close
+            </Button>
+          </div>
+        </div>
+      </AntModal>
     </div>
   );
 };
