@@ -1,7 +1,9 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button, Card, Modal, Badge } from '../components/ui';
 import { DashboardSidebar } from '../components/layout';
+import { CreateDropModal } from '../components/modals';
 import { message } from 'antd';
 import {
   Upload,
@@ -43,6 +45,7 @@ interface Drop {
 }
 
 const MyDrops = () => {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('drops');
   const [searchQuery, setSearchQuery] = useState('');
   const [filterBy, setFilterBy] = useState('all');
@@ -52,6 +55,7 @@ const MyDrops = () => {
   const [deleteDropId, setDeleteDropId] = useState<string | null>(null);
   const [bulkDeleteMode, setBulkDeleteMode] = useState(false);
   const [dropToView, setDropToView] = useState<Drop | null>(null);
+  const [isCreateDropModalOpen, setIsCreateDropModalOpen] = useState(false);
 
   // Mock data./,.
   const allDrops: Drop[] = [
@@ -284,7 +288,11 @@ const MyDrops = () => {
                     Manage and track all your shared drops
                   </p>
                 </div>
-                <Button variant="primary" size="md">
+                <Button 
+                  variant="primary" 
+                  size="md"
+                  onClick={() => setIsCreateDropModalOpen(true)}
+                >
                   <Upload className="w-4 h-4 mr-2" />
                   New Drop
                 </Button>
@@ -534,7 +542,7 @@ const MyDrops = () => {
                                 variant="ghost"
                                 size="sm"
                                 className="!p-2"
-                                onClick={() => setDropToView(drop)}
+                                onClick={() => navigate(`/dashboard/drop/${drop.id}`)}
                               >
                                 <Eye className="w-4 h-4" />
                               </Button>
@@ -660,7 +668,7 @@ const MyDrops = () => {
                                     variant="ghost"
                                     size="sm"
                                     className="!p-2"
-                                    onClick={() => setDropToView(drop)}
+                                    onClick={() => navigate(`/dashboard/drop/${drop.id}`)}
                                   >
                                     <Eye className="w-3.5 h-3.5" />
                                   </Button>
@@ -886,6 +894,12 @@ const MyDrops = () => {
           </div>
         )}
       </Modal>
+
+      {/* Create Drop Modal */}
+      <CreateDropModal
+        open={isCreateDropModalOpen}
+        onCancel={() => setIsCreateDropModalOpen(false)}
+      />
     </div>
   );
 };

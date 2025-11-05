@@ -1,7 +1,9 @@
 import { useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button, Card, Modal } from '../components/ui';
 import { DashboardSidebar } from '../components/layout';
+import { CreateDropModal } from '../components/modals';
 import { message } from 'antd';
 import { 
   Upload, 
@@ -29,6 +31,7 @@ import {
 } from 'lucide-react';
 
 const Dashboard = () => {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('dashboard');
   const [isNewDropModalOpen, setIsNewDropModalOpen] = useState(false);
   const [deleteDropId, setDeleteDropId] = useState<string | null>(null);
@@ -501,7 +504,7 @@ const Dashboard = () => {
                                 variant="ghost"
                                 size="sm"
                                 className="!p-2"
-                                onClick={() => window.open(`https://${drop.link}`, '_blank')}
+                                onClick={() => navigate(`/dashboard/drop/${drop.id}`)}
                               >
                                 <Eye className="w-4 h-4" />
                               </Button>
@@ -594,7 +597,7 @@ const Dashboard = () => {
                                     variant="ghost"
                                     size="sm"
                                     className="!p-2"
-                                    onClick={() => window.open(`https://${drop.link}`, '_blank')}
+                                    onClick={() => navigate(`/dashboard/drop/${drop.id}`)}
                                   >
                                     <Eye className="w-3.5 h-3.5" />
                                   </Button>
@@ -664,92 +667,10 @@ const Dashboard = () => {
         </div>
       </main>
 
-      <Modal
+      <CreateDropModal
         open={isNewDropModalOpen}
         onCancel={() => setIsNewDropModalOpen(false)}
-        title={
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-accent-cyan flex items-center justify-center shadow-glow-primary">
-              <Upload className="w-5 h-5 text-white" />
-            </div>
-            <div>
-              <h3 className="text-lg font-bold text-foreground">Create New Drop</h3>
-              <p className="text-xs text-foreground/60 font-normal">Share files or text that expires automatically</p>
-            </div>
-          </div>
-        }
-        footer={null}
-        width={600}
-      >
-        <div className="space-y-6">
-          <div className="border-2 border-dashed border-border rounded-xl p-10 text-center bg-muted/20 hover:border-primary hover:bg-muted/30 transition-all cursor-pointer group">
-            <div className="w-16 h-16 rounded-full bg-gradient-to-br from-primary/20 to-accent-cyan/20 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
-              <Upload className="w-8 h-8 text-primary" />
-            </div>
-            <p className="text-base font-semibold text-foreground mb-2">
-              Drop files here or click to browse
-            </p>
-            <p className="text-sm text-foreground/60">
-              Max file size: <span className="font-medium text-primary">50MB</span>
-            </p>
-          </div>
-          
-          <div className="space-y-5">
-            <div>
-              <label className="block text-sm font-semibold text-foreground mb-3">
-                Visibility
-              </label>
-              <div className="grid grid-cols-2 gap-3">
-                <button className="flex items-center gap-3 p-4 rounded-xl border-2 border-border bg-background-base hover:border-primary hover:bg-primary/5 transition-all group">
-                  <div className="w-10 h-10 rounded-lg bg-success/10 flex items-center justify-center group-hover:bg-success/20 transition-colors">
-                    <Globe className="w-5 h-5 text-success" />
-                  </div>
-                  <div className="text-left">
-                    <p className="text-sm font-semibold text-foreground">Public</p>
-                    <p className="text-xs text-foreground/60">Anyone with link</p>
-                  </div>
-                </button>
-                <button className="flex items-center gap-3 p-4 rounded-xl border-2 border-border bg-background-base hover:border-primary hover:bg-primary/5 transition-all group">
-                  <div className="w-10 h-10 rounded-lg bg-foreground/5 flex items-center justify-center group-hover:bg-foreground/10 transition-colors">
-                    <Lock className="w-5 h-5 text-foreground/70" />
-                  </div>
-                  <div className="text-left">
-                    <p className="text-sm font-semibold text-foreground">Private</p>
-                    <p className="text-xs text-foreground/60">Restricted access</p>
-                  </div>
-                </button>
-              </div>
-            </div>
-
-            <div>
-              <label className="block text-sm font-semibold text-foreground mb-3">
-                Expires In
-              </label>
-              <div className="grid grid-cols-3 gap-3">
-                <button className="p-3 rounded-lg border-2 border-border bg-background-base hover:border-primary hover:bg-primary/5 transition-all">
-                  <p className="text-sm font-semibold text-foreground">1 Hour</p>
-                  <p className="text-xs text-foreground/60">Quick share</p>
-                </button>
-                <button className="p-3 rounded-lg border-2 border-primary bg-primary/5 transition-all">
-                  <p className="text-sm font-semibold text-primary">24 Hours</p>
-                  <p className="text-xs text-primary/80">Recommended</p>
-                </button>
-                <button className="p-3 rounded-lg border-2 border-border bg-background-base hover:border-primary hover:bg-primary/5 transition-all">
-                  <p className="text-sm font-semibold text-foreground">7 Days</p>
-                  <p className="text-xs text-foreground/60">Extended</p>
-                </button>
-              </div>
-            </div>
-
-            <div className="pt-2">
-              <Button variant="primary" size="lg" fullWidth>
-                <Upload className="w-5 h-5 mr-2" />
-                Create Drop
-              </Button>
-            </div>
-          </div>
-        </div>
-      </Modal>
+      />
 
       <Modal
         open={!!deleteDropId}
